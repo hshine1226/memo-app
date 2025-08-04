@@ -39,3 +39,189 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* MDEditor 커스텀 스타일 */
+.w-md-editor {
+  background-color: white !important;
+}
+
+.w-md-editor-text-container .w-md-editor-text {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  color: #374151 !important;
+}
+
+.w-md-editor-text-container .w-md-editor-text::placeholder {
+  color: #9ca3af !important;
+}
+
+.w-md-editor .w-md-editor-toolbar {
+  background-color: #f9fafb !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  padding: 8px !important;
+}
+
+.w-md-editor .w-md-editor-toolbar button {
+  color: #6b7280 !important;
+  border-radius: 4px !important;
+  padding: 6px 8px !important;
+}
+
+.w-md-editor .w-md-editor-toolbar button:hover {
+  background-color: #e5e7eb !important;
+  color: #374151 !important;
+}
+
+.w-md-editor .w-md-editor-toolbar button.active {
+  background-color: #3b82f6 !important;
+  color: white !important;
+}
+
+.w-md-editor-preview {
+  background-color: white !important;
+  padding: 16px !important;
+}
+
+.w-md-editor-preview .wmde-markdown {
+  color: #374151 !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+
+.w-md-editor-preview .wmde-markdown h1,
+.w-md-editor-preview .wmde-markdown h2,
+.w-md-editor-preview .wmde-markdown h3,
+.w-md-editor-preview .wmde-markdown h4,
+.w-md-editor-preview .wmde-markdown h5,
+.w-md-editor-preview .wmde-markdown h6 {
+  color: #111827 !important;
+  margin-top: 1.5em !important;
+  margin-bottom: 0.5em !important;
+}
+
+.w-md-editor-preview .wmde-markdown p {
+  margin-bottom: 1em !important;
+}
+
+.w-md-editor-preview .wmde-markdown code {
+  background-color: #f3f4f6 !important;
+  color: #ef4444 !important;
+  padding: 2px 4px !important;
+  border-radius: 3px !important;
+  font-size: 0.875em !important;
+}
+
+.w-md-editor-preview .wmde-markdown pre {
+  background-color: #f3f4f6 !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 6px !important;
+  padding: 12px !important;
+  margin: 1em 0 !important;
+}
+
+.w-md-editor-preview .wmde-markdown pre code {
+  background-color: transparent !important;
+  color: #374151 !important;
+  padding: 0 !important;
+}
+
+.w-md-editor-preview .wmde-markdown blockquote {
+  border-left: 4px solid #e5e7eb !important;
+  padding-left: 16px !important;
+  margin: 1em 0 !important;
+  color: #6b7280 !important;
+  font-style: italic !important;
+}
+
+.w-md-editor-preview .wmde-markdown table {
+  border-collapse: collapse !important;
+  width: 100% !important;
+  margin: 1em 0 !important;
+}
+
+.w-md-editor-preview .wmde-markdown th,
+.w-md-editor-preview .wmde-markdown td {
+  border: 1px solid #e5e7eb !important;
+  padding: 8px 12px !important;
+  text-align: left !important;
+}
+
+.w-md-editor-preview .wmde-markdown th {
+  background-color: #f9fafb !important;
+  font-weight: 600 !important;
+}
+
+/* 리스트 스타일링 개선 */
+.w-md-editor-preview .wmde-markdown ul {
+  list-style-type: disc !important;
+  margin: 1em 0 !important;
+  padding-left: 1.5em !important;
+}
+
+.w-md-editor-preview .wmde-markdown ol {
+  list-style-type: decimal !important;
+  margin: 1em 0 !important;
+  padding-left: 1.5em !important;
+}
+
+.w-md-editor-preview .wmde-markdown li {
+  margin-bottom: 0.25em !important;
+  line-height: 1.6 !important;
+}
+
+.w-md-editor-preview .wmde-markdown ul ul {
+  list-style-type: circle !important;
+  margin: 0.25em 0 !important;
+}
+
+.w-md-editor-preview .wmde-markdown ul ul ul {
+  list-style-type: square !important;
+}
+
+.w-md-editor-preview .wmde-markdown ol ol {
+  list-style-type: lower-alpha !important;
+  margin: 0.25em 0 !important;
+}
+
+.w-md-editor-preview .wmde-markdown ol ol ol {
+  list-style-type: lower-roman !important;
+}
+
+/* 체크박스 리스트 스타일링 */
+.w-md-editor-preview .wmde-markdown input[type="checkbox"] {
+  margin-right: 0.5em !important;
+  cursor: pointer !important;
+}
+
+.w-md-editor-preview .wmde-markdown li input[type="checkbox"] {
+  margin-left: -1.5em !important;
+  margin-right: 0.5em !important;
+}
+
+/* 링크 스타일링 */
+.w-md-editor-preview .wmde-markdown a {
+  color: #3b82f6 !important;
+  text-decoration: none !important;
+}
+
+.w-md-editor-preview .wmde-markdown a:hover {
+  text-decoration: underline !important;
+}
+
+/* 강조 텍스트 스타일링 */
+.w-md-editor-preview .wmde-markdown strong {
+  font-weight: 700 !important;
+  color: #111827 !important;
+}
+
+.w-md-editor-preview .wmde-markdown em {
+  font-style: italic !important;
+  color: #374151 !important;
+}
+
+/* 수평선 스타일링 */
+.w-md-editor-preview .wmde-markdown hr {
+  border: none !important;
+  border-top: 2px solid #e5e7eb !important;
+  margin: 2em 0 !important;
+}
