@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useMemos } from '@/hooks/useMemos'
+import { useSupabaseMemos } from '@/hooks/useSupabaseMemos'
 import { Memo, MemoFormData } from '@/types/memo'
 import MemoList from '@/components/MemoList'
 import MemoForm from '@/components/MemoForm'
@@ -18,20 +18,24 @@ export default function Home() {
     deleteMemo,
     searchMemos,
     filterByCategory,
-  } = useMemos()
+  } = useSupabaseMemos()
 
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [editingMemo, setEditingMemo] = useState<Memo | null>(null)
 
-  const handleCreateMemo = (formData: MemoFormData) => {
-    createMemo(formData)
-    setIsFormOpen(false)
+  const handleCreateMemo = async (formData: MemoFormData) => {
+    const result = await createMemo(formData)
+    if (result) {
+      setIsFormOpen(false)
+    }
   }
 
-  const handleUpdateMemo = (formData: MemoFormData) => {
+  const handleUpdateMemo = async (formData: MemoFormData) => {
     if (editingMemo) {
-      updateMemo(editingMemo.id, formData)
-      setEditingMemo(null)
+      const success = await updateMemo(editingMemo.id, formData)
+      if (success) {
+        setEditingMemo(null)
+      }
     }
   }
 
