@@ -1,14 +1,16 @@
 'use client'
 
 import { Memo, MEMO_CATEGORIES } from '@/types/memo'
+import MDEditor from '@uiw/react-md-editor'
 
 interface MemoItemProps {
   memo: Memo
   onEdit: (memo: Memo) => void
-  onDelete: (id: string) => void
+  onDelete: (id: string) => Promise<boolean> | void
+  onView?: (memo: Memo) => void
 }
 
-export default function MemoItem({ memo, onEdit, onDelete }: MemoItemProps) {
+export default function MemoItem({ memo, onEdit, onDelete, onView }: MemoItemProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
     return date.toLocaleDateString('ko-KR', {
@@ -31,8 +33,21 @@ export default function MemoItem({ memo, onEdit, onDelete }: MemoItemProps) {
     return colors[category as keyof typeof colors] || colors.other
   }
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    // 버튼 클릭 시에는 모달을 열지 않음
+    if ((e.target as HTMLElement).closest('button')) {
+      return
+    }
+    if (onView) {
+      onView(memo)
+    }
+  }
+
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200">
+    <div 
+      className="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200 cursor-pointer"
+      onClick={handleCardClick}
+    >
       {/* 헤더 */}
       <div className="flex justify-between items-start mb-3">
         <div className="flex-1">
@@ -74,9 +89,9 @@ export default function MemoItem({ memo, onEdit, onDelete }: MemoItemProps) {
             </svg>
           </button>
           <button
-            onClick={() => {
+            onClick={async () => {
               if (window.confirm('정말로 이 메모를 삭제하시겠습니까?')) {
-                onDelete(memo.id)
+                await onDelete(memo.id)
               }
             }}
             className="p-2 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
@@ -99,11 +114,11 @@ export default function MemoItem({ memo, onEdit, onDelete }: MemoItemProps) {
         </div>
       </div>
 
-      {/* 내용 */}
+      {/* 내용 - 마크다운 프리뷰 */}
       <div className="mb-4">
-        <p className="text-gray-700 text-sm leading-relaxed line-clamp-3">
-          {memo.content}
-        </p>
+        <div data-color-mode="light" className="prose prose-sm max-w-none">
+          <MDEditor.Markdown source={memo.content} />
+        </div>
       </div>
 
       {/* 태그 */}
