@@ -1,14 +1,22 @@
 'use client'
 
+import dynamic from 'next/dynamic'
 import { Memo, MEMO_CATEGORIES } from '@/types/memo'
+
+// MDEditor.Markdown을 dynamic import로 로드 (SSR 이슈 방지)
+const MDViewer = dynamic(
+  () => import('@uiw/react-md-editor').then((mod) => mod.default.Markdown),
+  { ssr: false }
+)
 
 interface MemoItemProps {
   memo: Memo
   onEdit: (memo: Memo) => void
   onDelete: (id: string) => void
+  onView?: (memo: Memo) => void
 }
 
-export default function MemoItem({ memo, onEdit, onDelete }: MemoItemProps) {
+export default function MemoItem({ memo, onEdit, onDelete, onView }: MemoItemProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
     return date.toLocaleDateString('ko-KR', {
@@ -31,8 +39,18 @@ export default function MemoItem({ memo, onEdit, onDelete }: MemoItemProps) {
     return colors[category as keyof typeof colors] || colors.other
   }
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    // 버튼 클릭 이벤트가 아닌 경우에만 상세보기 열기
+    if (!(e.target as HTMLElement).closest('button') && onView) {
+      onView(memo)
+    }
+  }
+
   return (
-    <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200">
+    <div 
+      className="bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-200 cursor-pointer"
+      onClick={handleCardClick}
+    >
       {/* 헤더 */}
       <div className="flex justify-between items-start mb-3">
         <div className="flex-1">
@@ -99,11 +117,15 @@ export default function MemoItem({ memo, onEdit, onDelete }: MemoItemProps) {
         </div>
       </div>
 
-      {/* 내용 */}
+      {/* 내용 - 마크다운 프리뷰 */}
       <div className="mb-4">
-        <p className="text-gray-700 text-sm leading-relaxed line-clamp-3">
-          {memo.content}
-        </p>
+        <div className="text-gray-700 text-sm leading-relaxed line-clamp-3 prose prose-sm max-w-none overflow-hidden memo-item-preview">
+          <MDViewer 
+            source={memo.content} 
+            data-color-mode="light"
+            style={{ backgroundColor: 'transparent' }}
+          />
+        </div>
       </div>
 
       {/* 태그 */}
